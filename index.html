@@ -1,3 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>RTMS – Live Systemprofil</title>
+    <style>
+        body {
+            background: #0d0d0d;
+            color: #e6e6e6;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .box {
+            border: 1px solid #444;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            background: #1a1a1a;
+        }
+        h2 {
+            margin-top: 0;
+            color: #4db8ff;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        li {
+            padding: 4px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ⭐ RTMS SYSTEMPROFIL ⭐ -->
+<div class="box">
+    <h2>RTMS – Systemprofil (Live)</h2>
+    <ul>
+        <li>System: Z390‑A Pro / i5‑9600K / 32 GB / GTX 1660</li>
+        <li>Leitung: 600 Mbit</li>
+        <li>RTMS‑Modus: 81(+1) REAL</li>
+        <li>EICH: 1.000</li>
+        <li>ZEIT: 0.982</li>
+        <li>REAL: 0.874</li>
+        <li>Stand: 15.06.2026 – xh</li>
+    </ul>
+</div>
+
 <!-- ⭐ RTMS 81(+1) STATEENGINE ⭐ -->
 <div class="box">
     <h2>RTMS StateEngine</h2>
@@ -57,3 +106,6 @@ function rtms81Engine() {
 setInterval(rtms81Engine, 2000);
 rtms81Engine();
 </script>
+
+</body>
+</html>
