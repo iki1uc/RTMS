@@ -1,16 +1,227 @@
-<!-- ⭐ RTMS 81(+1) STATEENGINE – REAL VERGLEICH ⭐ -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>RTMS – MASTER</title>
+    <style>
+        body {
+            background: #050608;
+            color: #e6e6e6;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .box {
+            border: 1px solid #333;
+            padding: 18px;
+            margin-bottom: 22px;
+            border-radius: 8px;
+            background: #11141a;
+        }
+        h2 {
+            margin-top: 0;
+            color: #4db8ff;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        li {
+            padding: 3px 0;
+        }
+        .label {
+            color: #999;
+        }
+        .value {
+            color: #fff;
+        }
+        .advantage-real {
+            color: #00ff66;
+            font-weight: bold;
+        }
+        .advantage-rtms {
+            color: #4db8ff;
+            font-weight: bold;
+        }
+        .drift-low {
+            color: #00ff66;
+        }
+        .drift-mid {
+            color: #ffcc00;
+        }
+        .drift-high {
+            color: #ff4444;
+        }
+        .nc-high {
+            color: #00ff66;
+        }
+        .nc-mid {
+            color: #ffcc00;
+        }
+        .nc-low {
+            color: #ff4444;
+        }
+        /* REAL vs Optimum Graph */
+        #real-graph {
+            margin-top: 10px;
+            background: #1a1f27;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 12px;
+        }
+        .graph-bar-container {
+            position: relative;
+            width: 100%;
+            height: 14px;
+            background: #0b0e13;
+            border-radius: 7px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+        .graph-bar-real {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: rgba(0,255,102,0.7);
+        }
+        .graph-bar-opt {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: rgba(77,184,255,0.7);
+        }
+        .graph-legend {
+            margin-top: 4px;
+        }
+        .graph-legend span {
+            margin-right: 10px;
+            font-size: 11px;
+        }
+        .dot-real {
+            color: #00ff66;
+        }
+        .dot-opt {
+            color: #4db8ff;
+        }
+        /* 81-Heatmap */
+        #heatmap {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 2px;
+            margin-top: 10px;
+        }
+        .cell {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+            background: #222;
+        }
+        .cell-low {
+            background: #00ff66;
+        }
+        .cell-mid {
+            background: #ffcc00;
+        }
+        .cell-high {
+            background: #ff4444;
+        }
+        .heatmap-legend {
+            margin-top: 6px;
+            font-size: 11px;
+        }
+        .heatmap-legend span {
+            margin-right: 10px;
+        }
+        .dot-low { color:#00ff66; }
+        .dot-mid { color:#ffcc00; }
+        .dot-high { color:#ff4444; }
+        /* Small text */
+        .small {
+            font-size: 11px;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ⭐ RTMS SYSTEMPROFIL (EIGEN DEFINIERT) ⭐ -->
+<div class="box">
+    <h2>RTMS – Systemprofil</h2>
+    <ul>
+        <li><span class="label">System:</span> <span class="value" id="sys-hw">Z390‑A Pro / i5‑9600K / 32 GB / GTX 1660</span></li>
+        <li><span class="label">Leitung:</span> <span class="value">600 Mbit</span></li>
+        <li><span class="label">RTMS‑Modus:</span> <span class="value">81(+1) REAL</span></li>
+        <li><span class="label">EICH:</span> <span class="value">1.000</span></li>
+        <li><span class="label">ZEIT:</span> <span class="value">0.982</span></li>
+        <li><span class="label">REAL:</span> <span class="value" id="real-value-label">0.874</span></li>
+        <li><span class="label">Stand:</span> <span class="value">15.06.2026 – xh</span></li>
+    </ul>
+    <p class="small">Alle TECH‑Werte sind RTMS‑eigen definiert: Zustand, Geometrie, NC‑Tolerance, nicht FLOPS.</p>
+</div>
+
+<!-- ⭐ NC-LEGENDENBLOCK ⭐ -->
+<div class="box">
+    <h2>NC‑Legende – Vierigkeit + 81‑Asse</h2>
+    <p>NC spielt vierfach – offen + verborgen. Deshalb sind unsere Werte immer anders als klassische Benchmarks.</p>
+
+    <ul>
+        <li style="color:#4db8ff;"><b>NC‑Pass</b> – lässt alle Wege frei (0 Blockade, 100% Toleranz)</li>
+        <li style="color:#cccccc;"><b>NC‑Observe</b> – beobachtet Muster ohne Eingriff</li>
+        <li style="color:#00ff66;"><b>NC‑Correct</b> – korrigiert Drift, ohne Wege zu schließen</li>
+        <li style="color:#ffcc00;"><b>NC‑Shield</b> – schützt vor Kaskaden, ohne Verhalten zu bremsen</li>
+    </ul>
+
+    <p><b>81 Asse:</b> Jede Einheit ist ein Verhalten. 81 offen, 1 Meta‑Maxi sichtbar.</p>
+    <p><b>Ärmel‑Asse:</b> Optimum, Drift‑Neutralisierung, NC‑Tolerance, Real‑Abweichung.</p>
+
+    <p style="margin-top:10px; color:#66ff99;">
+        <b>Warum unsere Werte anders sind:</b><br>
+        RTMS misst Zustand, nicht Leistung. 81(+1) bildet Geometrie, NC toleriert Wege,
+        Meta‑Maxi glättet Real‑Sprünge. Klassische Systeme sind 1‑D – RTMS ist 4‑D + Reserve.
+    </p>
+</div>
+
+<!-- ⭐ RTMS 81(+1) STATEENGINE – REAL VERGLEICH + FARBEN + GRAPH ⭐ -->
 <div class="box">
     <h2>RTMS StateEngine – Realvergleich</h2>
-    <p>81‑Lauf + Meta‑Maxi + REAL‑Abgleich</p>
+    <p>81‑Lauf + Meta‑Maxi + REAL‑Abgleich (NC‑Vierigkeit aktiv)</p>
 
     <ul id="rtms-status">
         <li>Wird geladen…</li>
     </ul>
+
+    <!-- REAL vs Optimum Graph -->
+    <div id="real-graph">
+        <div>REAL vs. Optimum (RTMS)</div>
+        <div class="graph-bar-container">
+            <div class="graph-bar-opt" id="bar-opt"></div>
+            <div class="graph-bar-real" id="bar-real"></div>
+        </div>
+        <div class="graph-legend">
+            <span class="dot-real">● REAL</span>
+            <span class="dot-opt">● Optimum (RTMS)</span>
+        </div>
+    </div>
+</div>
+
+<!-- ⭐ 81-HEATMAP ⭐ -->
+<div class="box">
+    <h2>81‑Heatmap – Verhaltensraum</h2>
+    <p>Jede Zelle = 1 Einheit. Farbe zeigt Drift/Stabilität (NC‑Correct / NC‑Shield im Hintergrund).</p>
+    <div id="heatmap"></div>
+    <div class="heatmap-legend">
+        <span class="dot-low">■ stabil (low Drift)</span>
+        <span class="dot-mid">■ im Normfenster</span>
+        <span class="dot-high">■ hochdynamisch (NC‑Shield aktiv)</span>
+    </div>
 </div>
 
 <script>
 // REAL-WERT (dein echter Kernwert)
-let REAL_VALUE = 0.874;   // <- dein realer Wert (manuell oder später automatisch)
+let REAL_VALUE = 0.874;   // hier hältst du deine reale Sprungsphäre
 
 // 81 Einheiten erzeugen
 function create81() {
@@ -44,11 +255,41 @@ function metaMaxi(units) {
 
 // REAL‑VERGLEICH
 function compareReal(optimum, real) {
+    const diff = real - optimum;
     return {
         real: real.toFixed(3),
-        diff: (real - optimum).toFixed(3),
-        better: real > optimum ? "REAL punktet" : "RTMS punktet"
+        diff: diff.toFixed(3),
+        better: diff > 0 ? "REAL punktet" : "RTMS punktet",
+        isRealBetter: diff > 0
     };
+}
+
+// Drift‑Klasse
+function driftClass(drift) {
+    if (drift < 0.010) return "drift-low";
+    if (drift < 0.020) return "drift-mid";
+    return "drift-high";
+}
+
+// NC‑Tolerance‑Klasse
+function ncClass(nc) {
+    if (nc > 0.98) return "nc-high";
+    if (nc > 0.95) return "nc-mid";
+    return "nc-low";
+}
+
+// 81‑Heatmap rendern
+function renderHeatmap(units) {
+    const container = document.getElementById("heatmap");
+    container.innerHTML = "";
+    units.forEach(u => {
+        const c = document.createElement("div");
+        c.classList.add("cell");
+        if (u.drift < 0.010) c.classList.add("cell-low");
+        else if (u.drift < 0.020) c.classList.add("cell-mid");
+        else c.classList.add("cell-high");
+        container.appendChild(c);
+    });
 }
 
 // Haupt‑Engine
@@ -57,19 +298,68 @@ function rtms81Engine() {
     const meta = metaMaxi(units);
     const cmp = compareReal(parseFloat(meta.optimum), REAL_VALUE);
 
+    const driftVal = parseFloat(meta.drift);
+    const ncVal = parseFloat(meta.ncTolerance);
+
+    const driftCls = driftClass(driftVal);
+    const ncCls = ncClass(ncVal);
+
+    const advClass = cmp.isRealBetter ? "advantage-real" : "advantage-rtms";
+
     document.getElementById("rtms-status").innerHTML = `
         <li>81‑Lauf: Aktiv</li>
         <li>Optimum (RTMS): ${meta.optimum}</li>
         <li>REAL‑Wert: ${cmp.real}</li>
         <li>Abweichung (REAL - Optimum): ${cmp.diff}</li>
-        <li><b>Vorteil:</b> ${cmp.better}</li>
-        <li>Durchschnitts‑Drift: ${meta.drift}</li>
-        <li>NC‑Tolerance: ${meta.ncTolerance}</li>
+        <li class="${advClass}">Vorteil: ${cmp.better}</li>
+        <li class="${driftCls}">Drift: ${meta.drift}</li>
+        <li class="${ncCls}">NC‑Tolerance: ${meta.ncTolerance}</li>
         <li>Meta‑Maxi: OK</li>
         <li>Modus: 81(+1) REAL</li>
     `;
+
+    // Graph aktualisieren
+    const opt = parseFloat(meta.optimum);
+    const real = REAL_VALUE;
+    const optWidth = Math.max(0, Math.min(1, opt)) * 100;
+    const realWidth = Math.max(0, Math.min(1, real)) * 100;
+    document.getElementById("bar-opt").style.width = optWidth + "%";
+    document.getElementById("bar-real").style.width = realWidth + "%";
+
+    // Heatmap
+    renderHeatmap(units);
 }
+
+// Hardware‑Auto‑Erkennung (best effort, rein informativ)
+(function detectHardware() {
+    try {
+        let info = "Z390‑A Pro / i5‑9600K / 32 GB / GTX 1660";
+        const cores = navigator.hardwareConcurrency || null;
+        const ua = navigator.userAgent || "";
+        let gpu = "";
+
+        const canvas = document.createElement("canvas");
+        const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+        if (gl) {
+            const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+            if (debugInfo) {
+                gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+            }
+        }
+
+        if (cores) info += " / " + cores + " Threads";
+        if (gpu) info += " / " + gpu;
+
+        document.getElementById("sys-hw").textContent = info;
+    } catch (e) {
+        // still fine, fallback bleibt
+    }
+})();
 
 setInterval(rtms81Engine, 2000);
 rtms81Engine();
 </script>
+
+</body>
+</html>
+1
