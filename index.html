@@ -1,104 +1,59 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <title>RTMS – Realtime Meta‑System</title>
-    <style>
-        body { font-family: Arial; background: #111; color: #eee; padding: 40px; }
-        h1 { color: #4ec9b0; }
-        h2 { color: #569cd6; }
-        .box { background: #1e1e1e; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
-    </style>
-</head>
-<body>
-
-<h1>RTMS – Realtime Meta‑System</h1>
-<p>Author: iki1uc</p>
-
-<div class="box">
-<h2>Was ist RTMS?</h2>
-<p>RTMS ist ein Realtime Meta‑System, das nicht Rechenleistung misst, sondern Zustands‑Intelligenz:
-Echtzeit‑Stabilität, Fehler‑Kaskaden‑Resistenz, Selbst‑Korrektur, Norm‑Erkennung, System‑Präsenz und Realtime‑Entscheidungslogik.</p>
-</div>
-
-<div class="box">
-<h2>X4‑Messung</h2>
-<p>Die X4‑Geometrie kombiniert drei binäre Inputs (OP, iki1uc, iki2li).  
-Der Schwerpunkt (BUND‑Punkt) ergibt den X4‑Wert.</p>
-<pre>
-B = (v_OP + v_iki1uc + v_iki2li) / 3
-</pre>
-</div>
-
-<div class="box">
-<h2>BIOS‑Tiefe</h2>
-<p>Erfasst strukturelle Stabilität und Normabweichungen in Echtzeit.</p>
-</div>
-
-<div class="box">
-<h2>OP‑Strömung</h2>
-<p>Erkennt Richtungswechsel und Systemfluss.</p>
-</div>
-
-<div class="box">
-<h2>Nano‑Routine</h2>
-<p>Eine extrem leichte Realtime‑Routine:
-impft sich selbst, prüft Min/Middle/Max, berechnet Optimum, korrigiert Drift und verschwindet wieder.</p>
-</div>
-
-<div class="box">
-<h2>Benchmark‑Kompatibilität</h2>
-<ul>
-    <li>TOP500 – Realtime‑Stabilität statt FLOPS</li>
-    <li>MLPerf – Zero‑Latency statt Inferenzzeit</li>
-    <li>SPEC – Logik‑Optimierung statt Compiler‑Optimierung</li>
-    <li>RAS – Fehler‑Kaskaden‑Resistenz</li>
-    <li>Green500 – Ultra‑Effizienz</li>
-</ul>
-</div>
-
-<!-- ⭐ RTMS STATEENGINE BLOCK ⭐ -->
+<!-- ⭐ RTMS 81(+1) STATEENGINE ⭐ -->
 <div class="box">
     <h2>RTMS StateEngine</h2>
-    <p>Live‑Zustände (Simulation Version 1):</p>
+    <p>81‑Lauf + Meta‑Maxi (NC‑Tolerance Mode)</p>
 
     <ul id="rtms-status">
-        <li>Root: wird geladen…</li>
-        <li>OP‑Strömung: wird geladen…</li>
-        <li>BIOS‑Tiefe: wird geladen…</li>
-        <li>X4‑Wert: wird geladen…</li>
-        <li>Drift‑Index: wird geladen…</li>
-        <li>Nano‑Routine: wird geladen…</li>
-        <li>Modus: wird geladen…</li>
+        <li>Wird geladen…</li>
     </ul>
 </div>
 
 <script>
-function rtmsStateEngine() {
-    const state = {
-        root: "OK",
-        op: "Stable",
-        bios: "In Norm",
-        x4: (Math.random() * 1).toFixed(2),
-        drift: (Math.random() * 0.05).toFixed(3),
-        nano: "Ready",
-        mode: "Norm"
+// 81 Einheiten erzeugen
+function create81() {
+    let arr = [];
+    for (let i = 0; i < 81; i++) {
+        arr.push({
+            v: Math.random(),              // Verhalten
+            drift: Math.random() * 0.03,   // Drift 0–0.03
+            stability: Math.random(),      // Stabilität
+            tolerance: 1                   // NC toleriert alles
+        });
+    }
+    return arr;
+}
+
+// +1 Meta‑Maxi
+function metaMaxi(units) {
+    const values = units.map(u => u.v).sort();
+    const min = values[0];
+    const mid = values[40];
+    const max = values[80];
+
+    const avgDrift = units.reduce((a,b)=>a+b.drift,0) / 81;
+
+    return {
+        optimum: ((min + mid + max) / 3).toFixed(3),
+        drift: avgDrift.toFixed(3),
+        ncTolerance: (1 - avgDrift).toFixed(3)
     };
+}
+
+// Haupt‑Engine
+function rtms81Engine() {
+    const units = create81();
+    const meta = metaMaxi(units);
 
     document.getElementById("rtms-status").innerHTML = `
-        <li>Root: ${state.root}</li>
-        <li>OP‑Strömung: ${state.op}</li>
-        <li>BIOS‑Tiefe: ${state.bios}</li>
-        <li>X4‑Wert: ${state.x4}</li>
-        <li>Drift‑Index: ${state.drift}</li>
-        <li>Nano‑Routine: ${state.nano}</li>
-        <li>Modus: ${state.mode}</li>
+        <li>81‑Lauf: Aktiv</li>
+        <li>Optimum (Min/Mid/Max): ${meta.optimum}</li>
+        <li>Durchschnitts‑Drift: ${meta.drift}</li>
+        <li>NC‑Tolerance: ${meta.ncTolerance}</li>
+        <li>Meta‑Maxi: OK</li>
+        <li>Modus: 81(+1)</li>
     `;
 }
 
-setInterval(rtmsStateEngine, 2000);
-rtmsStateEngine();
+setInterval(rtms81Engine, 2000);
+rtms81Engine();
 </script>
-
-</body>
-</html>
