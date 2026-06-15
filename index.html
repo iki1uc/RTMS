@@ -57,6 +57,24 @@ impft sich selbst, prüft Min/Middle/Max, berechnet Optimum, korrigiert Drift un
 </ul>
 </div>
 
-</body>
-</html>
+<!-- ⭐ RTMS STATEENGINE BLOCK ⭐ -->
+<div class="box">
+    <h2>RTMS StateEngine</h2>
+    <p>Live‑Zustände (Simulation Version 1):</p>
 
+    <ul id="rtms-status">
+        <li>Root: wird geladen…</li>
+        <li>OP‑Strömung: wird geladen…</li>
+        <li>BIOS‑Tiefe: wird geladen…</li>
+        <li>X4‑Wert: wird geladen…</li>
+        <li>Drift‑Index: wird geladen…</li>
+        <li>Nano‑Routine: wird geladen…</li>
+        <li>Modus: wird geladen…</li>
+    </ul>
+</div>
+
+<script>
+function rtmsStateEngine() {
+    const state = {
+        root: "OK",
+        op: "Stable",
