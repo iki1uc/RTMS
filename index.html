@@ -78,3 +78,27 @@ function rtmsStateEngine() {
     const state = {
         root: "OK",
         op: "Stable",
+        bios: "In Norm",
+        x4: (Math.random() * 1).toFixed(2),
+        drift: (Math.random() * 0.05).toFixed(3),
+        nano: "Ready",
+        mode: "Norm"
+    };
+
+    document.getElementById("rtms-status").innerHTML = `
+        <li>Root: ${state.root}</li>
+        <li>OP‑Strömung: ${state.op}</li>
+        <li>BIOS‑Tiefe: ${state.bios}</li>
+        <li>X4‑Wert: ${state.x4}</li>
+        <li>Drift‑Index: ${state.drift}</li>
+        <li>Nano‑Routine: ${state.nano}</li>
+        <li>Modus: ${state.mode}</li>
+    `;
+}
+
+setInterval(rtmsStateEngine, 2000);
+rtmsStateEngine();
+</script>
+
+</body>
+</html>
